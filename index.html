@@ -157,11 +157,11 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
 
     <section class="zach" aria-label="The Zacharia">
       <div>
-        <h2 style="margin:0"><a href="zacharia/" style="text-decoration:none">Live: the Zacharia &rarr;</a></h2>
-        <p>1 Zacharia is however long Katie Zacharia has been White House Press Secretary, counted from the start of Monday, October 12, 2026 (Eastern). It grows every second, so the exchange rate keeps moving. <a href="zacharia/">Watch it on its own page</a>.</p>
+        <h2 style="margin:0"><a href="zacharia/" style="text-decoration:none">Final: the Zacharia &rarr;</a></h2>
+        <p><b style="color:var(--ink)">Breaking:</b> Katie Zacharia was fired on Friday, October 16, 2026. 1 Zacharia is now frozen at how long she lasted as White House Press Secretary, from the start of Monday, October 12 (Eastern) to the first report of her firing at 1:53 PM EDT on October 16. <a href="zacharia/">See the final tally</a>.</p>
       </div>
       <div class="stats" aria-live="off">
-        <div class="stat"><span class="lbl">1 Zacharia so far</span><span class="num" id="zSec">0<small>s</small></span><span class="sub" id="zDhms" style="color:var(--muted)"></span></div>
+        <div class="stat"><span class="lbl">1 Zacharia (final)</span><span class="num" id="zSec">0<small>s</small></span><span class="sub" id="zDhms" style="color:var(--muted)"></span></div>
         <div class="stat"><span class="lbl">Zacharias in 1 Scaramucci</span><span class="num" id="zPer">0<small>Zc</small></span><span class="sub" id="zNote" style="color:var(--muted)"></span></div>
       </div>
     </section>
@@ -198,7 +198,7 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
     </section>
   </div>
 </main>
-<footer><div class="wrap"><p><a class="coffee" href="https://buymeacoffee.com/amnhoj" target="_blank" rel="noopener">&#9749; Buy me a coffee</a><br>Enjoying the Mooch math? A coffee lasts about 0.0002 Scaramuccis.</p><p>Zacharia start date: <a href="https://www.washingtonpost.com/politics/2026/10/12/new-white-house-press-secretary-begins-her-term/" target="_blank" rel="noopener">The Washington Post, "New White House press secretary begins her term" (Oct. 12, 2026)</a>; her <a href="https://www.whitehouse.gov/releases/2026/10/katie-zacharia-delivers-powerful-inaugural-briefing-as-37th-white-house-press-secretary/" target="_blank" rel="noopener">first briefing as the 37th press secretary</a> followed on Oct. 13. No start time was published, so the counter begins at midnight Eastern on Oct. 12.</p>Dates you pick are read in your device's time zone. Not affiliated with anyone named in it, least of all the Mooch.</div></footer>
+<footer><div class="wrap"><p><a class="coffee" href="https://buymeacoffee.com/amnhoj" target="_blank" rel="noopener">&#9749; Buy me a coffee</a><br>Enjoying the Mooch math? A coffee lasts about 0.0002 Scaramuccis.</p><p>Zacharia start date: <a href="https://www.washingtonpost.com/politics/2026/10/12/new-white-house-press-secretary-begins-her-term/" target="_blank" rel="noopener">The Washington Post, "New White House press secretary begins her term" (Oct. 12, 2026)</a>; her <a href="https://www.whitehouse.gov/releases/2026/10/katie-zacharia-delivers-powerful-inaugural-briefing-as-37th-white-house-press-secretary/" target="_blank" rel="noopener">first briefing as the 37th press secretary</a> followed on Oct. 13. No start time was published, so the counter begins at midnight Eastern on Oct. 12. Her firing: <a href="https://www.cbsnews.com/news/trump-katie-zacharia-white-house-press-secretary/" target="_blank" rel="noopener">CBS News, "Katie Zacharia out as White House press secretary after first week on the job"</a>; <a href="https://www.cnn.com/2026/10/16/politics/katie-zacharia-press-secretary" target="_blank" rel="noopener">CNN, "Trump fires Katie Zacharia as White House press secretary, advisers say"</a>; <a href="https://san.com/cc/katie-zacharia-fired-as-press-secretary-after-just-days-on-the-job-report/" target="_blank" rel="noopener">Straight Arrow News, published 1:53 PM EDT Oct. 16, 2026</a>, the earliest timestamped report we found, citing the New York Times' scoop.</p>Dates you pick are read in your device's time zone. Not affiliated with anyone named in it, least of all the Mooch.</div></footer>
 
 <script>
 (function () {
@@ -243,6 +243,7 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
   });
 
   var scale = [
+    ["Katie Zacharia as press secretary (4.6 days)", 395581],
     ["One week", 7 * 86400],
     ["Kim Kardashian and Kris Humphries' marriage (72 days)", 72 * 86400],
     ["A year on Mercury (88 days)", 87.969 * 86400],
@@ -289,15 +290,15 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
   [from, to].forEach(function (el) { el.addEventListener("input", function () { render(); save(); }); });
   toNow.addEventListener("change", function () { render(); save(); });
   defSel.addEventListener("change", function () { renderScale(); render(); save(); });
-  var ZACH_START = Date.UTC(2026, 9, 12, 4, 0, 0);
+  var ZACH_START = Date.UTC(2026, 9, 12, 4, 0, 0), ZACH_END = Date.UTC(2026, 9, 16, 17, 53, 1);
   function renderZach() {
-    var z = (Date.now() - ZACH_START) / 1000;
+    var z = (ZACH_END - ZACH_START) / 1000;
     if (z <= 0) { $("zSec").innerHTML = "0<small>s</small>"; $("zPer").innerHTML = "∞<small>Zc</small>"; return; }
     $("zSec").innerHTML = fmt(Math.floor(z), 0) + "<small>s</small>";
     $("zDhms").textContent = dhms(z) + " · " + fmt(z / unit(), 4) + " Sc";
     var per = unit() / z;
     $("zPer").innerHTML = fmt(per, 6) + "<small>Zc</small>";
-    $("zNote").textContent = per > 1 ? "She outlasts the Mooch once this reaches 1." : "She has officially out-Mooched the Mooch.";
+    $("zNote").textContent = per > 1 ? "Fired " + dhms(unit() - z) + " short of 1 Scaramucci." : "She out-Mooched the Mooch before the end.";
   }
   defSel.addEventListener("change", renderZach);
   renderScale(); render(); renderZach();
