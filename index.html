@@ -215,6 +215,7 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
   function parseLocal(v) { if (!v) return NaN; var t = new Date(v).getTime(); return t; }
   function unit() { return Number(defSel.value); }
   function fmt(n, dp) { return n.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
+  function sig(n) { if (!isFinite(n) || n === 0) return fmt(n, 0); var d = Math.max(0, 2 - Math.floor(Math.log10(Math.abs(n)))); var r = Number(n.toFixed(d)); if (Math.floor(Math.log10(Math.abs(r))) > Math.floor(Math.log10(Math.abs(n)))) d = Math.max(0, d - 1); return fmt(n, d); }
   function dhms(sec) {
     sec = Math.floor(sec);
     var d = Math.floor(sec / 86400); sec -= d * 86400;
@@ -255,7 +256,7 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
   function renderScale() {
     var u = unit();
     $("scale").innerHTML = scale.map(function (r) {
-      return "<tr><td>" + r[0] + "</td><td class='n'>" + fmt(r[1] / u, 2) + " Sc</td></tr>";
+      return "<tr><td>" + r[0] + "</td><td class='n'>" + sig(r[1] / u) + " Sc</td></tr>";
     }).join("");
   }
 
@@ -272,11 +273,11 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
     }
     var sec = (b - a) / 1000, u = unit();
     var sc = Math.abs(sec) / u;
-    $("out").textContent = fmt(sc, sc < 1000 ? 6 : 4);
+    $("out").textContent = sig(sc);
     $("outSub").textContent = (sec >= 0 ? "elapsed between your two moments" : "until that moment") + " · " + fmt(Math.round(Math.abs(sec)), 0) + " seconds";
     var whole = Math.floor(sc), rem = Math.abs(sec) - whole * u;
     $("breakdown").innerHTML = "That's <b>" + fmt(whole, 0) + "</b> full Scaramucci" + (whole === 1 ? "" : "s") +
-      " plus <b>" + dhms(rem) + "</b> into the next one, or <b>" + fmt((rem / u) * 100, 1) + "%</b> of the way to being fired again.";
+      " plus <b>" + dhms(rem) + "</b> into the next one, or <b>" + sig((rem / u) * 100) + "%</b> of the way to being fired again.";
   }
 
   function save() {
@@ -297,9 +298,9 @@ footer { color: var(--muted); font-size: 13px; padding-block: 0 40px; }
     if (z <= 0) { $("zSec").innerHTML = "0<small>s</small>"; $("zPer").innerHTML = "∞<small>Zc</small>"; return; }
     $("zSec").innerHTML = fmt(Math.floor(z), 0) + "<small>s</small>";
     $("zDhms").textContent = dhms(z);
-    $("zSc").innerHTML = fmt(z / unit(), 6) + "<small>Sc</small>";
+    $("zSc").innerHTML = sig(z / unit()) + "<small>Sc</small>";
     var per = unit() / z;
-    $("zPer").innerHTML = fmt(per, 6) + "<small>Zc</small>";
+    $("zPer").innerHTML = sig(per) + "<small>Zc</small>";
     $("zNote").textContent = per > 1 ? "Fired " + dhms(unit() - z) + " short of 1 Scaramucci." : "She out-Mooched the Mooch before the end.";
   }
   defSel.addEventListener("change", renderZach);
